@@ -1,0 +1,15 @@
+# Only the Python analytics service is containerised; run Laravel the usual way (php artisan serve / php-fpm).
+# SQLite:  mount ./database and keep DATABASE_URL below.
+# MySQL:   DATABASE_URL=mysql+pymysql://user:password@host.docker.internal:3306/silabar
+services:
+  analytics:
+    build: ./analytics
+    restart: unless-stopped
+    environment:
+      TZ: Asia/Jakarta
+      ANALYTICS_TOKEN: ${ANALYTICS_TOKEN:-ganti-dengan-token-rahasia}
+      DATABASE_URL: ${ANALYTICS_DATABASE_URL:-sqlite:////data/database.sqlite}
+    volumes:
+      - ./database:/data
+    ports:
+      - "8001:8001"
