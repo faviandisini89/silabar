@@ -22,3 +22,10 @@ yarn-error.log
 analytics/.venv/
 analytics/.pytest_cache/
 **/__pycache__/
+
+# AI / Internal dev & deployment notes
+AGENTS.md
+DEPLOY_RENDER.md
+docs/ML.md
+analytics/README.md
+env.additions
