@@ -3,11 +3,15 @@
 use App\Http\Controllers\Admin;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\Borrower;
+use App\Http\Controllers\LandingController;
 use App\Http\Controllers\LoanDocumentController;
 use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\Staff;
 use App\Http\Middleware\EnsureRole;
 use Illuminate\Support\Facades\Route;
+
+/* ---------- public / landing ---------- */
+Route::get('/', [LandingController::class, 'index'])->name('root');
 
 /* ---------- guests ---------- */
 Route::middleware('guest')->group(function () {
@@ -20,7 +24,6 @@ Route::middleware('guest')->group(function () {
 /* ---------- any signed-in user ---------- */
 Route::middleware('auth')->group(function () {
     Route::post('/keluar', [AuthController::class, 'logout'])->name('logout');
-    Route::get('/', fn () => redirect()->route(auth()->user()->role->home()))->name('root');
 
     Route::get('/notifikasi', [NotificationController::class, 'index'])->name('notifications.index');
     Route::post('/notifikasi/baca', [NotificationController::class, 'readAll'])->name('notifications.read');

@@ -14,20 +14,11 @@ use Illuminate\Validation\Rules\Password;
 
 class AuthController extends Controller
 {
-    public function showLogin(AvailabilityService $availability)
+    public function showLogin()
     {
-        $stat = [
-            'running' => Loan::whereIn('status', ['borrowed', 'overdue'])->count(),
-            'units' => Item::all()->sum(fn ($i) => $availability->availability($i, now(), now()->addHour())['avail']),
-            'pending' => Loan::where('status', 'pending')->count(),
-        ];
-        $tomorrow = now()->addDay()->setTime(8, 0);
-        $board = Item::orderBy('id')->limit(6)->get()->map(fn ($i) => [$i->name, $availability->availability($i, $tomorrow, $tomorrow->copy()->addDay())['avail']]);
         $demo = app()->environment('local') ? User::whereIn('email', ['rina@mhs.silabar.id', 'agus@silabar.id', 'admin@silabar.id'])->get() : collect();
 
-        $tickets = Loan::with(['details.item', 'borrower'])->whereIn('status', ['borrowed', 'approved'])->latest('id')->limit(3)->get();
-
-        return view('auth.login', compact('stat', 'board', 'demo', 'tickets'));
+        return view('auth.login', compact('demo'));
     }
 
     public function login(Request $request, AuditLogger $audit)
