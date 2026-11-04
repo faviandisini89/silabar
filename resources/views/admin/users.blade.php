@@ -20,6 +20,6 @@
         <div class="field"><label>Nama</label><input class="in" name="name" required></div>
         <div class="two"><div class="field"><label>Email</label><input class="in" type="email" name="email" required></div><div class="field"><label>Peran</label><select class="sel" name="role">@foreach ($roles as $r)<option value="{{ $r->value }}">{{ $r->label() }}</option>@endforeach</select></div></div>
         <div class="two"><div class="field"><label>Organisasi atau unit</label><input class="in" name="organization"></div><div class="field"><label>NIM atau NIP</label><input class="in" name="nim"></div></div>
-        <p class="hint">Kata sandi awal: {{ config('silabar.demo_password') }}. Minta pengguna menggantinya.</p>
+        <p class="hint">Kata sandi default dibuat otomatis oleh sistem. Minta pengguna segera menggantinya setelah masuk.</p>
         <div class="row" style="justify-content:flex-end"><button type="button" class="btn" data-close>Batal</button><button class="btn pri">Simpan</button></div></form></div>
 @endsection

@@ -84,15 +84,3 @@ php artisan migrate --seed
 php artisan serve
 ```
 Buka browser di `http://127.0.0.1:8000`.
-
----
-
-## 🔑 Akun Demo (Development)
-
-Password default untuk semua akun: **`silabar123`**
-
-| Peran | Email |
-| :--- | :--- |
-| **Admin** | `admin@silabar.id` |
-| **Petugas** | `agus@silabar.id` |
-| **Peminjam** | `rina@mhs.silabar.id` |

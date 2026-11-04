@@ -16,9 +16,7 @@ class AuthController extends Controller
 {
     public function showLogin()
     {
-        $demo = app()->environment('local') ? User::whereIn('email', ['rina@mhs.silabar.id', 'agus@silabar.id', 'admin@silabar.id'])->get() : collect();
-
-        return view('auth.login', compact('demo'));
+        return view('auth.login');
     }
 
     public function login(Request $request, AuditLogger $audit)

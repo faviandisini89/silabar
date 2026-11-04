@@ -27,12 +27,21 @@ class LandingController extends Controller
 
         $tomorrow = now()->addDay()->setTime(8, 0);
 
-        // Ambil daftar barang beserta kategori dan ketersediaan stok
+        // Filter kategori dan pencarian nama barang
         $categoryFilter = $request->query('kategori');
+        $search = trim($request->query('q', ''));
         $query = Item::with(['category', 'location'])->orderBy('name');
         
         if ($categoryFilter) {
             $query->whereHas('category', fn ($q) => $q->where('slug', $categoryFilter)->orWhere('name', $categoryFilter));
+        }
+
+        if ($search !== '') {
+            $query->where(function ($q) use ($search) {
+                $q->where('name', 'like', "%{$search}%")
+                  ->orWhere('sku', 'like', "%{$search}%")
+                  ->orWhere('description', 'like', "%{$search}%");
+            });
         }
 
         $items = $query->get()->map(function ($item) use ($availability, $tomorrow) {
@@ -57,6 +66,7 @@ class LandingController extends Controller
 
         $categories = Category::withCount('items')->orderBy('name')->get();
 
-        return view('welcome', compact('stat', 'items', 'categories', 'categoryFilter'));
+        return view('welcome', compact('stat', 'items', 'categories', 'categoryFilter', 'search'));
     }
 }
+
